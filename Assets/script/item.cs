@@ -21,7 +21,7 @@ public class item : MonoBehaviour
     }
     
 
-    void OnTriggerEnter(Collider other)
+    /*void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("agent"))
         {
@@ -37,10 +37,10 @@ public class item : MonoBehaviour
                     agent.bobmnum++;
                     break;
             }
-            stageCtrl.map[x, y] = Vector2Int.zero;
+            stageCtrl.map[x, y].x = 0;
             Destroy(gameObject);
         }
-    }
+    }*/
 
    
 

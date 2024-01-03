@@ -15,9 +15,7 @@ public class FoodModelAgent : Maze_Agent
 
     Vector2Int foodPoint;
 
-    float oneEatReward;
-    float allCollectReward;
-    float wtepReward;
+    
     public override void Initialize()
     {
         
@@ -66,6 +64,12 @@ public class FoodModelAgent : Maze_Agent
             {
                 case 0:
                     curPos = newPos;
+                    if (stageCtrl.map[newPos.x, newPos.y].y >= 3) 
+                        AddReward(-0.5f* stageCtrl.map[newPos.x, newPos.y].y);
+                    
+                    if(stageCtrl.map[newPos.x, newPos.y].y < 255)
+                        stageCtrl.map[newPos.x, newPos.y].y++;
+
                     this.transform.position = getPos(curPos);
                     break;
                 case 255://wall
@@ -73,7 +77,13 @@ public class FoodModelAgent : Maze_Agent
                     break;
                 case 2://food
                     AddReward(100);
+                    Debug.Log("eat");
+                    foodnum++;
+                    stageCtrl.DestoryItem(newPos);
+                    stageCtrl.map[newPos.x, newPos.y].x = 0;
+                    stageCtrl.map[newPos.x, newPos.y].y++;
                     this.transform.position = getPos(curPos);
+                    
                     break;
             }
      

@@ -40,7 +40,8 @@ public class stageCtrl : MonoBehaviour
 
     public bool haveGoal;
     public int mapDataIndex;
-    List<GameObject> itemList;
+    Dictionary<Vector2Int,GameObject> itemList;
+    
     List<GameObject> wallList;
     string[] mapDataStr;
     string mapData;
@@ -50,7 +51,7 @@ public class stageCtrl : MonoBehaviour
     public delegate void generateItemFuc();
     void Awake()
     {
-        itemList = new List<GameObject>();
+        itemList = new Dictionary<Vector2Int, GameObject>();
         wallList= new List<GameObject>();
         map = new Vector2Int[width,height];
         mapDataStr = File.ReadAllLines(".\\Assets\\script\\mapData.txt");
@@ -208,7 +209,7 @@ public class stageCtrl : MonoBehaviour
         map[width - 1, height - 1] = new Vector2Int(5, 0);
         Vector3 newPos = new Vector3(this.transform.position.x + 1.5f * (width - 1), 0.5f, this.transform.position.z - (1.5f * (height - 1)));
         GameObject newCell = Instantiate(goal, newPos, Quaternion.identity);
-        itemList.Add(newCell);
+        itemList.Add(new Vector2Int(width - 1, height - 1) ,newCell);
         newCell.transform.SetParent(this.transform);
         
     }
@@ -222,7 +223,7 @@ public class stageCtrl : MonoBehaviour
         map[pos.x, pos.y] = new Vector2Int(5, 0);
         Vector3 newPos = new Vector3(this.transform.position.x + 1.5f * (pos.x), 0.5f, this.transform.position.z - (1.5f * (pos.y)));
         GameObject newCell = Instantiate(goal, newPos, Quaternion.identity);
-        itemList.Add(newCell);
+        itemList.Add(pos,newCell);
         newCell.transform.SetParent(this.transform);
 
     }
@@ -320,7 +321,7 @@ public class stageCtrl : MonoBehaviour
                 newCell.GetComponent<item>().set(code,x,y,this);
                 map[x, y] =new Vector2Int(code,0);
                 curNum++;
-                itemList.Add(newCell);
+                itemList.Add(new Vector2Int(x,y), newCell);
                 
             }
         }
@@ -347,7 +348,7 @@ public class stageCtrl : MonoBehaviour
                 newCell.GetComponent<item>().set(code, x, y, this);
                 map[x, y] = new Vector2Int(code, 0);
                 curNum++;
-                itemList.Add(newCell);
+                itemList.Add(new Vector2Int(x, y), newCell);
 
             }
         }
@@ -368,7 +369,7 @@ public class stageCtrl : MonoBehaviour
             newCell.GetComponent<item>().set(code, pos.x, pos.y, this);
             map[pos.x, pos.y] = new Vector2Int(code, 0);
 
-            itemList.Add(newCell);
+            itemList.Add(new Vector2Int(pos.x, pos.y), newCell);
 
         }
         else { 
@@ -393,7 +394,7 @@ public class stageCtrl : MonoBehaviour
                 newCell.GetComponent<item>().set(code, pos.x, pos.y, this);
                 map[pos.x, pos.y] = new Vector2Int(code, 0);
 
-                itemList.Add(newCell);
+                itemList.Add(new Vector2Int(pos.x, pos.y), newCell);
 
             }
             else
@@ -439,7 +440,7 @@ public class stageCtrl : MonoBehaviour
     {
         foreach (var item in itemList)
         {
-            Destroy(item);
+            Destroy(item.Value);
         }
         itemList.Clear();
         map = new Vector2Int[width, height];
@@ -450,7 +451,7 @@ public class stageCtrl : MonoBehaviour
     {
         foreach (var item in itemList)
         {
-            Destroy(item);
+            Destroy(item.Value);
         }
         itemList.Clear();
         map = new Vector2Int[width, height];
@@ -461,5 +462,13 @@ public class stageCtrl : MonoBehaviour
         if (haveGoal)
             creatGoal();
         
+    }
+
+
+    public void DestoryItem(Vector2Int pos) {
+
+        Destroy(itemList[pos]);
+
+
     }
 }
