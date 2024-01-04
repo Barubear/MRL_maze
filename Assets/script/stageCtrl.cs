@@ -120,12 +120,12 @@ public class stageCtrl : MonoBehaviour
                     newCell.transform.SetParent(this.transform);
                 }
                 
-                map[i, j] = new Vector2Int(255, 255);
+                map[i, j] = new Vector2Int(-1, -1);
                 int x = i;
                 int y = j;
                     
                     string dic = mapData[index];
-                    if (dic == "r" && map[x + 1, y].x != 255)//right
+                    if (dic == "r" && map[x + 1, y].x != -1)//right
                     {
                         for (int k = 1; k < 6; k++)
                         {
@@ -135,7 +135,7 @@ public class stageCtrl : MonoBehaviour
                                 newCell.transform.SetParent(this.transform);
                                 wallList.Add(newCell);
                             }
-                            map[x + k, y] = new Vector2Int(255, 255);
+                            map[x + k, y] = new Vector2Int(-1, -1);
                             
                         }
                     index++;
@@ -143,7 +143,7 @@ public class stageCtrl : MonoBehaviour
                     
                     }
 
-                    if (dic == "l" && map[x - 1, y].x != 255)//left
+                    if (dic == "l" && map[x - 1, y].x != -1)//left
                     {
                         for (int k = 1; k < 6; k++)
                         {
@@ -153,14 +153,14 @@ public class stageCtrl : MonoBehaviour
                                 newCell.transform.SetParent(this.transform);
                                 wallList.Add(newCell);
                             }
-                            map[x - k, y] = new Vector2Int(255, 255);
+                            map[x - k, y] = new Vector2Int(-1, -1);
                             
                         }
                     index++;
                     
 
                     }
-                    if (dic == "u" && map[x, y - 1].x != 255)//up
+                    if (dic == "u" && map[x, y - 1].x != -1)//up
                     {
                         for (int k = 1; k < 6; k++)
                         {
@@ -170,14 +170,14 @@ public class stageCtrl : MonoBehaviour
                                 newCell.transform.SetParent(this.transform);
                                 wallList.Add(newCell);
                             }
-                            map[x, y - k] = new Vector2Int(255, 255);
+                            map[x, y - k] = new Vector2Int(-1, -1);
                             
                         }
                     index++;
                     
 
                     }
-                    if (dic == "d" && map[x, y + 1].x != 255)//down
+                    if (dic == "d" && map[x, y + 1].x != -1)//down
                     {
                         for (int k = 1; k < 6; k++)
                         {
@@ -187,7 +187,7 @@ public class stageCtrl : MonoBehaviour
                                 newCell.transform.SetParent(this.transform);
                                 wallList.Add(newCell);
                         }
-                            map[x, y + k] = new Vector2Int(255, 255);
+                            map[x, y + k] = new Vector2Int(-1, -1);
                             
                         }
                     index++;

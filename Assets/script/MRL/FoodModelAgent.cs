@@ -36,7 +36,7 @@ public class FoodModelAgent : Maze_Agent
             }
         } */
         this.transform.position = getPos(startPoint);
-        stageCtrl.mapReset(IcreatItem);
+        stageCtrl.mapReset();
         curPos = startPoint;
     }
 
@@ -56,7 +56,7 @@ public class FoodModelAgent : Maze_Agent
 
         
         Vector2Int newPos = curPos + getActionVector(contorlSignal);
-        if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-10);
+        if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-1);
         else
         {
 
@@ -64,36 +64,39 @@ public class FoodModelAgent : Maze_Agent
             {
                 case 0:
                     curPos = newPos;
-                    if (stageCtrl.map[newPos.x, newPos.y].y >= 3) 
+                    /*if (stageCtrl.map[newPos.x, newPos.y].y > 3) 
                         AddReward(-0.5f* stageCtrl.map[newPos.x, newPos.y].y);
                     
                     if(stageCtrl.map[newPos.x, newPos.y].y < 255)
-                        stageCtrl.map[newPos.x, newPos.y].y++;
+                        stageCtrl.map[newPos.x, newPos.y].y++;*/
 
                     this.transform.position = getPos(curPos);
                     break;
                 case 255://wall
-                    AddReward(-10);
+                    AddReward(-1);
                     break;
                 case 2://food
-                    AddReward(100);
+                    this.transform.position = getPos(curPos);
+                    stageCtrl.map[newPos.x, newPos.y].x = 0;
+                    AddReward(100+ 50*foodnum);
                     Debug.Log("eat");
                     foodnum++;
                     stageCtrl.DestoryItem(newPos);
-                    stageCtrl.map[newPos.x, newPos.y].x = 0;
-                    stageCtrl.map[newPos.x, newPos.y].y++;
-                    this.transform.position = getPos(curPos);
+                    
+                    //stageCtrl.map[newPos.x, newPos.y].y++;
+                    
                     
                     break;
             }
      
         }
-        if (foodnum == PointList.Count)
+        if (foodnum == stageCtrl.foodNums)
         {
-            AddReward(100);
+            AddReward(100 * foodnum);
+            Debug.Log("completed");
             EndEpisode();
         }
-        AddReward(-0.01f);
+        AddReward(-0.1f);
 
 
 
@@ -114,6 +117,7 @@ public class FoodModelAgent : Maze_Agent
 
     public void IcreatItem() {
 
+        stageCtrl.foodNums = PointList.Count;
         stageCtrl.creatItemWithPosition(stageCtrl.food , 2, PointList);
 
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6759186192400493117}
   - component: {fileID: 6759186192400493116}
   - component: {fileID: 6759186192400493119}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: wall
   m_TagString: wall
   m_Icon: {fileID: 0}
@@ -95,5 +95,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.2, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}

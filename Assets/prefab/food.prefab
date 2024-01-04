@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4590538554251717538}
   - component: {fileID: 8081496566425572259}
   - component: {fileID: 5456152881053557064}
-  - component: {fileID: 6339319210054972065}
   - component: {fileID: 3181927220566331045}
+  - component: {fileID: 4634193005771873080}
   m_Layer: 0
   m_Name: food
   m_TagString: food
@@ -85,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6339319210054972065
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7004825035768377589}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3181927220566331045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,8 +97,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec82b41d4175fad4cac70f32b10cadb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 2
-  x: 0
-  y: 0
-  stageCtrl: {fileID: 0}
-  agent: {fileID: 0}
+--- !u!136 &4634193005771873080
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004825035768377589}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 0.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
