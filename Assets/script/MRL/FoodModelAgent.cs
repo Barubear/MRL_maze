@@ -23,7 +23,7 @@ public class FoodModelAgent : Maze_Agent
     public override void OnEpisodeBegin()
     {
         foodnum = 0;
-        startPoint = new Vector2Int(11,8);
+        startPoint = new Vector2Int(18,25);
        /* int foodIndex = Random.Range(0, PointList.Count);
         foodPoint = PointList[foodIndex];
         /*while (true) {
@@ -43,7 +43,7 @@ public class FoodModelAgent : Maze_Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(foodnum);
-        sensor.AddObservation(foodnum/ PointList.Count);
+        sensor.AddObservation(foodnum/ stageCtrl.foodNums);
     }
 
 
@@ -90,13 +90,13 @@ public class FoodModelAgent : Maze_Agent
             }
      
         }
-        if (foodnum == stageCtrl.foodNums)
+        if (foodnum == 15)
         {
             AddReward(100 * foodnum);
             Debug.Log("completed");
             EndEpisode();
         }
-        AddReward(-0.1f);
+        AddReward(-0.2f);
 
 
 

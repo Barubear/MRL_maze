@@ -579,14 +579,14 @@ MonoBehaviour:
   food: {fileID: 7004825035768377589, guid: d1b056e9f23720342a76207984407896, type: 3}
   boom: {fileID: 2890460418659693210, guid: 1bf30cad853ef0244ad56e828d9124bf, type: 3}
   goal: {fileID: 7046546703774944298, guid: eb55326d77e93d349b65308b892bda11, type: 3}
-  width: 23
-  height: 17
-  foodNums: 2
-  boomNum: 0
+  width: 41
+  height: 11
+  foodNums: 0
+  boomNum: 40
   foodSeed: 0.9
   boomSeed: 0
   haveGoal: 0
-  mapDataIndex: 3
+  mapDataIndex: 4
 --- !u!4 &557596980
 Transform:
   m_ObjectHideFlags: 0
@@ -1417,12 +1417,10 @@ GameObject:
   - component: {fileID: 1891166364}
   - component: {fileID: 1891166363}
   - component: {fileID: 1891166358}
-  - component: {fileID: 1891166368}
   - component: {fileID: 1891166369}
   - component: {fileID: 1891166370}
-  - component: {fileID: 1891166371}
-  - component: {fileID: 1891166372}
   - component: {fileID: 1891166373}
+  - component: {fileID: 1891166374}
   m_Layer: 0
   m_Name: agent
   m_TagString: agent
@@ -1540,31 +1538,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891166356}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1891166368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891166356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d02fa904ff1e2184986ffd6a29d0a63e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 10000
-  stageCtrl: {fileID: 557596979}
-  foodnum: 0
-  bobmnum: 0
-  curPos: {x: 0, y: 0}
-  PointList:
-  - {x: 2, y: 2}
-  - {x: 2, y: 8}
-  - {x: 20, y: 8}
-  - {x: 19, y: 15}
 --- !u!54 &1891166369
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1594,63 +1567,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 1, z: 0.99999994}
   m_Center: {x: 0, y: -0.00000047683716, z: 0}
---- !u!114 &1891166371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891166356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: WallRaySensor
-  m_DetectableTags:
-  - wall
-  m_RaysPerDirection: 15
-  m_MaxRayDegrees: 180
-  m_SphereCastRadius: 0.5
-  m_RayLength: 20
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  m_ObservationStacks: 5
-  m_AlternatingRayOrder: 1
-  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
-  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
-  m_StartVerticalOffset: 0
-  m_EndVerticalOffset: 0
---- !u!114 &1891166372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891166356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: FoodRaySensor
-  m_DetectableTags:
-  - food
-  m_RaysPerDirection: 15
-  m_MaxRayDegrees: 180
-  m_SphereCastRadius: 0.5
-  m_RayLength: 20
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967233
-  m_ObservationStacks: 5
-  m_AlternatingRayOrder: 1
-  rayHitColor: {r: 0, g: 1, b: 0.11260939, a: 1}
-  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
-  m_StartVerticalOffset: 0
-  m_EndVerticalOffset: 0
 --- !u!114 &1891166373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891166356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7efa3d6d59b895f4e99458c4b89c3dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 10000
+  stageCtrl: {fileID: 557596979}
+  foodnum: 0
+  bobmnum: 0
+  curPos: {x: 0, y: 0}
+--- !u!114 &1891166374
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1663,7 +1600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageCtrl: {fileID: 557596979}
-  maze_Agent: {fileID: 1891166368}
+  maze_Agent: {fileID: 1891166373}
   stackedNum: 5
   ViewWidth: 21
   ViewHeight: 21

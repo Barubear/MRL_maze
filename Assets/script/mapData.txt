@@ -1,4 +1,6 @@
-r,l,u,r,u,u,u,r,r,d,u,l,u,l,r,l,l,l,u,r,l,r,u,r,r
+r,l,u,r,u,u,u,r,u,d,u,l,u,l,r,l,l,l,u,r,l,r,u,r,r
 r,u,d,r,u,u
 d,r,r,u,d
 l,u,u,d,d,r
+r,n,r,n,r,n
+r,l,u,d,n,u,u,d,l,d,u,l,u,u,u,l,l,n,l,r,n,r,r,n,r

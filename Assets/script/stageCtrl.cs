@@ -112,9 +112,17 @@ public class stageCtrl : MonoBehaviour
             
             for (int j = 5; j < height; j += 6)
             {
+                if (index > mapData.Length - 1) break;
+                string dic = mapData[index];
+
+                if (dic == "n") {
+                    index++;
+                    continue;
+                } 
+
                 Vector3 newPos;
                 GameObject newCell;
-                if (isFirst) {
+                if (isFirst ) {
                     newPos = new Vector3(this.transform.position.x + 1.5f * i, 0.5f, this.transform.position.z - (1.5f * j));
                     newCell = Instantiate(wall, newPos, Quaternion.identity);
                     newCell.transform.SetParent(this.transform);
@@ -123,8 +131,8 @@ public class stageCtrl : MonoBehaviour
                 map[i, j] = new Vector2Int(-1, -1);
                 int x = i;
                 int y = j;
-                    
-                    string dic = mapData[index];
+
+                
                     if (dic == "r" && map[x + 1, y].x != -1)//right
                     {
                         for (int k = 1; k < 6; k++)
@@ -194,11 +202,12 @@ public class stageCtrl : MonoBehaviour
                     
 
                     }
-                if (index > mapData.Length - 1) break;
-
                 
+               
 
-                
+
+
+
             }
         }
 
@@ -213,6 +222,7 @@ public class stageCtrl : MonoBehaviour
         newCell.transform.SetParent(this.transform);
         
     }
+    
 
     public void creatGoal(Vector2Int pos)
     {
@@ -459,8 +469,7 @@ public class stageCtrl : MonoBehaviour
         else isFirst = false;
         creatWall(mapData);
         generateMapFuc();
-        if (haveGoal)
-            creatGoal();
+        
         
     }
 
