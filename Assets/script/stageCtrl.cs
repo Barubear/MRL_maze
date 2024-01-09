@@ -128,7 +128,7 @@ public class stageCtrl : MonoBehaviour
                     newCell.transform.SetParent(this.transform);
                 }
                 
-                map[i, j] = new Vector2Int(-1, -1);
+                map[i, j] = new Vector2Int(-1, 1000);
                 int x = i;
                 int y = j;
 
@@ -143,7 +143,7 @@ public class stageCtrl : MonoBehaviour
                                 newCell.transform.SetParent(this.transform);
                                 wallList.Add(newCell);
                             }
-                            map[x + k, y] = new Vector2Int(-1, -1);
+                            map[x + k, y] = new Vector2Int(-1, 1000);
                             
                         }
                     index++;
@@ -161,7 +161,7 @@ public class stageCtrl : MonoBehaviour
                                 newCell.transform.SetParent(this.transform);
                                 wallList.Add(newCell);
                             }
-                            map[x - k, y] = new Vector2Int(-1, -1);
+                            map[x - k, y] = new Vector2Int(-1, 1000);
                             
                         }
                     index++;
@@ -178,7 +178,7 @@ public class stageCtrl : MonoBehaviour
                                 newCell.transform.SetParent(this.transform);
                                 wallList.Add(newCell);
                             }
-                            map[x, y - k] = new Vector2Int(-1, -1);
+                            map[x, y - k] = new Vector2Int(-1, 1000);
                             
                         }
                     index++;
@@ -195,7 +195,7 @@ public class stageCtrl : MonoBehaviour
                                 newCell.transform.SetParent(this.transform);
                                 wallList.Add(newCell);
                         }
-                            map[x, y + k] = new Vector2Int(-1, -1);
+                            map[x, y + k] = new Vector2Int(-1, 1000);
                             
                         }
                     index++;
@@ -323,7 +323,7 @@ public class stageCtrl : MonoBehaviour
         
         while (curNum < num) {
             int x = GenerateRandomNumber(2, width - 1,11, width - 1,seed);
-            int y = GenerateRandomNumber(2, width - 1, 2, width - 7, seed);
+            int y = GenerateRandomNumber(2, height - 1, 2, height - 7, seed);
             if (map[x, y].x == 0) {
                 Vector3 newPos = new Vector3(this.transform.position.x + 1.5f * x, 0.5f, this.transform.position.z - (1.5f * y));
                 GameObject newCell = Instantiate(perfb, newPos, Quaternion.identity);
@@ -334,6 +334,31 @@ public class stageCtrl : MonoBehaviour
                 itemList.Add(new Vector2Int(x,y), newCell);
                 
             }
+        }
+
+
+
+    }
+    public void creatItem(int num, GameObject perfb, int code, float seed, int minX, int maxX, int minY, int maxY)
+    {
+        int curNum = 0;
+
+        while (curNum < num)
+        {
+            int x = GenerateRandomNumber(0, width - 1, minX, maxX, seed);
+            int y = GenerateRandomNumber(0, height - 1, minY, maxY, seed);
+            if (map[x, y].x == 0)
+            {
+                Vector3 newPos = new Vector3(this.transform.position.x + 1.5f * x, 0.5f, this.transform.position.z - (1.5f * y));
+                GameObject newCell = Instantiate(perfb, newPos, Quaternion.identity);
+                newCell.transform.SetParent(this.transform);
+                newCell.GetComponent<item>().set(code, x, y, this);
+                map[x, y] = new Vector2Int(code, 0);
+                curNum++;
+                itemList.Add(new Vector2Int(x, y), newCell);
+
+            }
+            
         }
 
 

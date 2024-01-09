@@ -9,7 +9,7 @@ using UnityEngine.Experimental.GlobalIllumination;
 public class BombModelAgent : Maze_Agent
 {
     Vector2Int startPoint;
-    
+    public int MaxBomb;
     public override void OnEpisodeBegin()
     {
         bobmnum = 0;
@@ -43,7 +43,10 @@ public class BombModelAgent : Maze_Agent
             {
                 case 0:
                     curPos = newPos;
+                   if(stageCtrl.map[newPos.x, newPos.y].y>3) AddReward(-1*stageCtrl.map[newPos.x, newPos.y].y);
+                    stageCtrl.map[newPos.x, newPos.y].y++;
                     this.transform.position = getPos(curPos);
+                    
                     break;
                 case 255://wall
                     AddReward(-1);
@@ -51,49 +54,81 @@ public class BombModelAgent : Maze_Agent
                 case 3://bomb
                     this.transform.position = getPos(curPos);
                     stageCtrl.map[newPos.x, newPos.y].x = 0;
-                    AddReward(-10* bobmnum);
-                    Debug.Log("bomb!");
+                    AddReward(-100);
+                    
+                    
                     bobmnum++;
                     stageCtrl.DestoryItem(newPos);
 
-                    //stageCtrl.map[newPos.x, newPos.y].y++;
+                    stageCtrl.map[newPos.x, newPos.y].y++;
                     break;
                 case 5:
-                    AddReward(100+100* (stageCtrl.boomNum - bobmnum));
+                    Debug.Log("completed");
+                    AddReward(10* stageCtrl.boomNum - bobmnum);
                     EndEpisode();
                     break;
             }
-
+            
         }
-        AddReward(-0.01f);
+        if (bobmnum > MaxBomb) {
+            AddReward(-1000);
+            Debug.Log("bomb!");
+            EndEpisode();
+        }
     }
 
 
     public void IcreatItem()
     {
-       int minX = 5, maxY = 10;
-        for (int i = 0; i < 3; i++) { 
-            int dic = Random.Range(0, 10);
+        stageCtrl.creatGoal(new Vector2Int(15, 5));
+        
+        
+        int dic = Random.Range(0, 10);
             if (dic > 4)//up
             {
-                stageCtrl.creatItemWithPosition(stageCtrl.boom, 3, creatRadomPointList(stageCtrl.boomNum / 4, minX, maxY, 0, 4));
+            
+            stageCtrl.creatItem(stageCtrl.boomNum, stageCtrl.boom, 3, 0.85f, 0 , stageCtrl.width-1, 0, 6);
             }
             else { //down
-
-                stageCtrl.creatItemWithPosition(stageCtrl.boom, 3, creatRadomPointList(stageCtrl.boomNum / 4, minX, maxY, 6, 10));
+            
+            stageCtrl.creatItem(stageCtrl.boomNum, stageCtrl.boom, 3, 0.85f, 0, stageCtrl.width - 1, 7, stageCtrl.height-1);
             }
 
-            minX += 12;
-            maxY += 12;
-        }
+            
+        
 
-        Debug.Log("creat");
-        stageCtrl.creatItem(stageCtrl.boomNum / 4, stageCtrl.boom, 3);
-        stageCtrl.creatGoal(new Vector2Int(40, 5));
+        
+        //stageCtrl.creatItem(stageCtrl.boomNum / 4, stageCtrl.boom, 3);
+        
 
 
     }
+    public void RadomBomb()
+    {
+        stageCtrl.creatGoal(new Vector2Int(15, 5));
+        for (int i = 0; i < stageCtrl.boomNum; i++) {
+            int whileTimes = 0;
+            while (whileTimes < 100)
+            {
 
+                Vector2Int newPos = new Vector2Int(Random.Range(0, stageCtrl.width), Random.Range(0, stageCtrl.height));
+                
+                if (newPos == startPoint) continue;
+                if (stageCtrl.map[newPos.x, newPos.y].x != 0) continue;
+                if (newPos.x + 1 < stageCtrl.width && stageCtrl.map[newPos.x + 1, newPos.y].x != 0) continue;
+                if (newPos.x - 1 > 0 && stageCtrl.map[newPos.x - 1, newPos.y].x != 0) continue;
+                if (newPos.y + 1 < stageCtrl.height && stageCtrl.map[newPos.x, newPos.y + 1].x != 0) continue;
+                if (newPos.y - 1 > 0 && stageCtrl.map[newPos.x, newPos.y - 1].x != 0) continue;
+                
+                stageCtrl.creatItemWithPosition(stageCtrl.boom, 3, newPos);
+                break;
+                
+                whileTimes++;
+            }
+        }
+        
+
+    }
 
     public List<Vector2Int> creatRadomPointList(int lenth , int minX, int maxX, int minY, int maxY) {
 

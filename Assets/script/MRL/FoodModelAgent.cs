@@ -6,14 +6,15 @@ using Unity.MLAgents.Sensors;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FoodModelAgent : Maze_Agent
+public class FoodModelAgent : ModularAgent
 {
     
-    Vector2Int startPoint;
+    public Vector2Int startPoint;
     
     public List<Vector2Int> PointList;
 
     Vector2Int foodPoint;
+    
 
     
     public override void Initialize()
@@ -22,22 +23,30 @@ public class FoodModelAgent : Maze_Agent
     }
     public override void OnEpisodeBegin()
     {
+
         foodnum = 0;
-        startPoint = new Vector2Int(18,25);
-       /* int foodIndex = Random.Range(0, PointList.Count);
-        foodPoint = PointList[foodIndex];
-        /*while (true) {
-            int startIndex = Random.Range(0, PointList.Count);
-            
-            if (startIndex != foodIndex) {
-                startPoint = PointList[startIndex];
-                foodPoint = PointList[foodIndex];
-                break;
-            }
-        } */
-        this.transform.position = getPos(startPoint);
-        stageCtrl.mapReset();
-        curPos = startPoint;
+        if (!isModular)
+        {
+            this.transform.position = getPos(startPoint);
+            stageCtrl.mapReset(IcreatItem);
+            curPos = startPoint;
+            /* int foodIndex = Random.Range(0, PointList.Count);
+         foodPoint = PointList[foodIndex];
+         /*while (true) {
+             int startIndex = Random.Range(0, PointList.Count);
+
+             if (startIndex != foodIndex) {
+                 startPoint = PointList[startIndex];
+                 foodPoint = PointList[foodIndex];
+                 break;
+             }
+         } */
+        }
+        else curPos = controller.curPos;
+
+
+
+
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -52,73 +61,72 @@ public class FoodModelAgent : Maze_Agent
 
 
 
-        int contorlSignal = actions.DiscreteActions[0];
+        contorlSignal = actions.DiscreteActions[0];
 
-        
-        Vector2Int newPos = curPos + getActionVector(contorlSignal);
-        if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-1);
-        else
-        {
+        if (!isModular) {
 
-            switch (stageCtrl.map[newPos.x, newPos.y].x)
+            Vector2Int newPos = curPos + getActionVector(contorlSignal);
+            if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-1);
+            else
             {
-                case 0:
-                    curPos = newPos;
-                    /*if (stageCtrl.map[newPos.x, newPos.y].y > 3) 
-                        AddReward(-0.5f* stageCtrl.map[newPos.x, newPos.y].y);
-                    
-                    if(stageCtrl.map[newPos.x, newPos.y].y < 255)
-                        stageCtrl.map[newPos.x, newPos.y].y++;*/
 
-                    this.transform.position = getPos(curPos);
-                    break;
-                case 255://wall
-                    AddReward(-1);
-                    break;
-                case 2://food
-                    this.transform.position = getPos(curPos);
-                    stageCtrl.map[newPos.x, newPos.y].x = 0;
-                    AddReward(100+ 50*foodnum);
-                    Debug.Log("eat");
-                    foodnum++;
-                    stageCtrl.DestoryItem(newPos);
-                    
-                    //stageCtrl.map[newPos.x, newPos.y].y++;
-                    
-                    
-                    break;
+                switch (stageCtrl.map[newPos.x, newPos.y].x)
+                {
+                    case 0:
+                        curPos = newPos;
+                        if (stageCtrl.map[newPos.x, newPos.y].y > 3)
+                            AddReward(-0.5f * stageCtrl.map[newPos.x, newPos.y].y);
+
+                        if (stageCtrl.map[newPos.x, newPos.y].y < 255)
+                            stageCtrl.map[newPos.x, newPos.y].y++;
+
+                        this.transform.position = getPos(curPos);
+                        break;
+                    case 255://wall
+                        AddReward(-1);
+                        break;
+                    case 2://food
+                        this.transform.position = getPos(curPos);
+                        stageCtrl.map[newPos.x, newPos.y].x = 0;
+                        AddReward(100 + 50 * foodnum);
+                        Debug.Log("eat");
+                        foodnum++;
+                        stageCtrl.DestoryItem(newPos);
+
+                        stageCtrl.map[newPos.x, newPos.y].y++;
+
+
+                        break;
+                    case 5:
+                        if (foodnum < 12) AddReward(-1000);
+                        else AddReward(90 * foodnum);
+                        EndEpisode();
+                        Debug.Log("goal");
+                        break;
+
+                }
+
             }
-     
+            if (foodnum == 15)
+            {
+                AddReward(100 * foodnum);
+                Debug.Log("completed");
+                EndEpisode();
+            }
+            AddReward(-0.2f);
         }
-        if (foodnum == 15)
-        {
-            AddReward(100 * foodnum);
-            Debug.Log("completed");
-            EndEpisode();
-        }
-        AddReward(-0.2f);
+        
 
 
 
     }
 
-    Vector2Int getNewAlex(int minX ,int maxX, int minY , int maxY)
-    {
-        int newX = 0;
-        int newY = 0;
-        while (true) { 
-            newX = Random.Range(minX, maxX);
-            newY = Random.Range(minY, maxY);
-            if (stageCtrl.map[newX, newY].x == 0) break;
-        }
-        return new Vector2Int(newX, newY);
-    }
+    
 
 
     public void IcreatItem() {
-
-        stageCtrl.foodNums = PointList.Count;
-        stageCtrl.creatItemWithPosition(stageCtrl.food , 2, PointList);
+        stageCtrl.creatGoal(new Vector2Int(34, 34));
+        stageCtrl.creatItem(stageCtrl.foodNums, stageCtrl.food, 2, 0.85f, 12, stageCtrl.width - 1, 0, stageCtrl.height-12);
 
 
     }

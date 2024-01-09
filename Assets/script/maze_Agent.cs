@@ -10,11 +10,12 @@ public class Maze_Agent : Agent
 
     
     protected float minDis;
-    protected Vector2Int goal;
+    public Vector2Int goal;
     public int foodnum;
     public int bobmnum;
     public Vector2Int curPos;
-    // Start is called before the first frame update
+    
+    
     protected Vector3 getPos(Vector2Int alex)
     {
         return new Vector3(stageCtrl.transform.position.x + 1.5f * alex.x, 0.5f, stageCtrl.transform.position.z - (1.5f * alex.y));

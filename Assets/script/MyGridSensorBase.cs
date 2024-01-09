@@ -83,13 +83,12 @@ public class MyGridSensorBase : ISensor
                 {
                     
                     writer[h, w, 0] = -1;
-                    //writer[h, w, 1] = 255;
+                    //writer[h, w, 1] = 1000;
                     dataRaw[index] = Convert.ToByte(255);
-                    //dataRaw[index + ViewWidth * ViewHeight] = Convert.ToByte(255);
+                    //dataRaw[index + 1] = Convert.ToByte(255);
                     str += "-" + " ";
 
-                    //writer[h, w, 2] = 1000;
-                    //dataRaw[index + 2] = Convert.ToByte(255);
+                    
                 }
                 else {
                     if (newX == maze_Agent.curPos.x && newY == maze_Agent.curPos.y)
@@ -108,9 +107,9 @@ public class MyGridSensorBase : ISensor
                     }
 
                     
-
-                    //dataRaw[index + ViewWidth*ViewHeight] = Convert.ToByte(stageCtrl.map[newX, newY].y);
-                    //writer[h, w, 1] = stageCtrl.map[newX, newY].y;
+                   /* if(stageCtrl.map[newX, newY].y>255) dataRaw[index+1] = Convert.ToByte(255);
+                    else dataRaw[index+1] = Convert.ToByte(stageCtrl.map[newX, newY].y);
+                    writer[h, w, 1] = stageCtrl.map[newX, newY].y;*/
 
                     /*writer[h, w, 1] = stageCtrl.map[newX, newY].y;
                     dataRaw[index + 1] = Convert.ToByte(stageCtrl.map[newX, newY].y);
