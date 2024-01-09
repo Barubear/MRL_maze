@@ -86,6 +86,7 @@ public class FoodModelAgent : ModularAgent
                         AddReward(-1);
                         break;
                     case 2://food
+                        curPos = newPos;
                         this.transform.position = getPos(curPos);
                         stageCtrl.map[newPos.x, newPos.y].x = 0;
                         AddReward(100 + 50 * foodnum);
