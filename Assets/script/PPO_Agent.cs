@@ -23,7 +23,7 @@ public class PPO_Agent : Maze_Agent
         curPos = Vector2Int.zero;
         goal = new Vector2Int(stageCtrl.width-1 , stageCtrl.height-1);
         minDis = Vector2Int.Distance(curPos, goal);
-        stageCtrl.mapReset();
+        stageCtrl.mapReset(IcreatItem);
         foodnum = 0;
         bobmnum = 0;
         this.transform.position = getPos(curPos);
@@ -108,6 +108,12 @@ public override void OnActionReceived(ActionBuffers actions)
                     if (stageCtrl.map[newPos.x, newPos.y].y < 255)
                         stageCtrl.map[newPos.x, newPos.y].y++;*/
                     curPos = newPos;
+                    this.transform.position = getPos(curPos);
+                    stageCtrl.map[newPos.x, newPos.y].x = 0;
+                    
+                    Debug.Log("eat");
+                    foodnum++;
+                    stageCtrl.DestoryItem(newPos);
                     break;
                 case 3://bomb
                     AddReward(-150);
@@ -115,16 +121,18 @@ public override void OnActionReceived(ActionBuffers actions)
                     if (stageCtrl.map[newPos.x, newPos.y].y < 255)
                         stageCtrl.map[newPos.x, newPos.y].y++;*/
                     curPos = newPos;
+                    this.transform.position = getPos(curPos);
                     break;
                 case 5://goal
                     AddReward(300);
                     curPos = newPos;
+                    this.transform.position = getPos(curPos);
                     EndEpisode();
                     break;
 
 
             }
-            this.transform.position = getPos(curPos);
+            
             AddReward(-0.01f);
         }
         
@@ -164,7 +172,13 @@ public override void OnActionReceived(ActionBuffers actions)
         else if (Input.GetKeyDown(KeyCode.S)) aout[0] = 3;
         else aout[0] = 0;
     }
+    public void IcreatItem()
+    {
+        stageCtrl.creatGoal(new Vector2Int(34, 34));
+        stageCtrl.creatItem(stageCtrl.foodNums, stageCtrl.food, 2, 0.85f, 12, stageCtrl.width - 1, 0, stageCtrl.height - 12);
 
+
+    }
 
 }
     
