@@ -125,13 +125,13 @@ public override void OnActionReceived(ActionBuffers actions)
 
             }
             this.transform.position = getPos(curPos);
-            AddReward(-0.001f);
+            AddReward(-0.01f);
         }
         
         float currDis = Vector2Int.Distance(curPos, goal);
         if (currDis < minDis)
         {
-            AddReward(5f);
+            AddReward(10f);
             minDis = currDis;
         }
         
