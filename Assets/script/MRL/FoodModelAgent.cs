@@ -66,7 +66,7 @@ public class FoodModelAgent : ModularAgent
         if (!isModular) {
 
             Vector2Int newPos = curPos + getActionVector(contorlSignal);
-            if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-1);
+            if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-10);
             else
             {
 
@@ -83,10 +83,11 @@ public class FoodModelAgent : ModularAgent
                         this.transform.position = getPos(curPos);
                         break;
                     case 255://wall
-                        AddReward(-1);
+                        AddReward(-10);
                         break;
                     case 2://food
                         this.transform.position = getPos(curPos);
+                        curPos = newPos;
                         stageCtrl.map[newPos.x, newPos.y].x = 0;
                         AddReward(100 + 50 * foodnum);
                         Debug.Log("eat");
@@ -113,7 +114,7 @@ public class FoodModelAgent : ModularAgent
                 Debug.Log("completed");
                 EndEpisode();
             }
-            AddReward(-0.2f);
+            AddReward(-0.01f);
         }
         
 
