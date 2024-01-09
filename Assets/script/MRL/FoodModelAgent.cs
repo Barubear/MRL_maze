@@ -74,11 +74,11 @@ public class FoodModelAgent : ModularAgent
                 {
                     case 0:
                         curPos = newPos;
-                        if (stageCtrl.map[newPos.x, newPos.y].y > 3)
+                       /* if (stageCtrl.map[newPos.x, newPos.y].y > 3)
                             AddReward(-0.5f * stageCtrl.map[newPos.x, newPos.y].y);
 
                         if (stageCtrl.map[newPos.x, newPos.y].y < 255)
-                            stageCtrl.map[newPos.x, newPos.y].y++;
+                            stageCtrl.map[newPos.x, newPos.y].y++;*/
 
                         this.transform.position = getPos(curPos);
                         break;
@@ -93,7 +93,7 @@ public class FoodModelAgent : ModularAgent
                         foodnum++;
                         stageCtrl.DestoryItem(newPos);
 
-                        stageCtrl.map[newPos.x, newPos.y].y++;
+                        //stageCtrl.map[newPos.x, newPos.y].y++;
 
 
                         break;
