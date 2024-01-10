@@ -99,7 +99,7 @@ public override void OnActionReceived(ActionBuffers actions)
                     curPos = newPos;
 
                     break;
-                case 255://wall
+                case -1://wall
                     AddReward(-10);
                     break;
                 case 2://food

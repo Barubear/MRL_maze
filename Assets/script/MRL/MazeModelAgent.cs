@@ -68,14 +68,14 @@ public class MazeModelAgent : ModularAgent
                     case 0:
                         curPos = newPos;
                         break;
-                    case 255://wall
+                    case -1://wall
                         AddReward(-10);
                         break;
 
                     case 5://goal
                         AddReward(500);
                         curPos = newPos;
-
+                        Debug.Log("goal");
                         EndEpisode();
                         break;
 

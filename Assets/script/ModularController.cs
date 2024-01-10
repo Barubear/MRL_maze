@@ -45,7 +45,7 @@ public class ModularController : Maze_Agent
                     curPos = newPos;
                     this.transform.position = getPos(curPos);
                     break;
-                case 255://wall
+                case -1://wall
                     AddReward(-10);
                     break;
                 case 2://food
