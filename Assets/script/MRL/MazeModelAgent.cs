@@ -93,7 +93,7 @@ public class MazeModelAgent : ModularAgent
             }
         }
         else {
-            controller.ActionDic[this] = actions;
+            //controller.ActionDic[this] = actions;
             float currDis = Vector2Int.Distance(curPos, goal);
             if (currDis < minDis)
             {

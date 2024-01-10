@@ -28,12 +28,14 @@ public class ModularController : Maze_Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-
-        //int contorlSignal = actions.DiscreteActions[0];
         int contorlindx = 0;
-        int contorlSignal = ActionDic[modulars[contorlindx]].DiscreteActions[0];
+        if (actions.DiscreteActions[0] > actions.DiscreteActions[1]) contorlindx = 1;
+        else if (actions.DiscreteActions[0] < actions.DiscreteActions[1]) contorlindx = 0;
+        else contorlindx = Random.Range(0,2);
+
+        int contorlSignal = modulars[contorlindx].contorlSignal;
         Vector2Int newPos = curPos + getActionVector(contorlSignal);
-        if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-1);
+        if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-10);
         else
         {
 
@@ -44,19 +46,26 @@ public class ModularController : Maze_Agent
                     this.transform.position = getPos(curPos);
                     break;
                 case 255://wall
-                    AddReward(-1);
+                    AddReward(-10);
                     break;
                 case 2://food
+                    AddReward(150);
+                    curPos = newPos;
                     this.transform.position = getPos(curPos);
+                    curPos = newPos;
+                    stageCtrl.map[newPos.x, newPos.y].x = 0;
+                    Debug.Log("eat");
+                    stageCtrl.DestoryItem(newPos);
+                    
                     break;
                 case 5:
-
+                    AddReward(500);
                     EndEpisode();
 
                     break;
 
             }
-
+            AddReward(-0.1f);
         }
     }
 
