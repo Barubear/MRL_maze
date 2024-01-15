@@ -121,7 +121,7 @@ public class BombModelAgent : Maze_Agent
                 if (newPos.y - 1 > 0 && stageCtrl.map[newPos.x, newPos.y - 1].x != 0) continue;
                 
                 stageCtrl.creatItemWithPosition(stageCtrl.boom, 3, newPos);
-                break;
+                
                 
                 whileTimes++;
             }

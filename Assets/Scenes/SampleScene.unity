@@ -918,7 +918,7 @@ GameObject:
   - component: {fileID: 912409180}
   - component: {fileID: 912409179}
   - component: {fileID: 912409186}
-  - component: {fileID: 912409185}
+  - component: {fileID: 912409187}
   m_Layer: 0
   m_Name: PPOagent
   m_TagString: Untagged
@@ -940,7 +940,7 @@ Transform:
   m_Children:
   - {fileID: 662140353}
   m_Father: {fileID: 1553739542}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &912409179
 Rigidbody:
@@ -1016,27 +1016,6 @@ MonoBehaviour:
   m_UseChildActuators: 1
   m_DeterministicInference: 0
   m_ObservableAttributeHandling: 0
---- !u!114 &912409185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912409177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 282f342c2ab144bf38be65d4d0c4e07d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Camera: {fileID: 641337078}
-  m_SensorName: CameraSensor
-  m_Width: 84
-  m_Height: 84
-  m_Grayscale: 0
-  m_ObservationType: 0
-  m_RuntimeCameraEnable: 0
-  m_ObservationStacks: 10
-  m_Compression: 1
 --- !u!114 &912409186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,12 +1031,30 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
+  MaxStep: 10000
   stageCtrl: {fileID: 557596979}
   goal: {x: 0, y: 0}
   foodnum: 0
   bobmnum: 0
   curPos: {x: 0, y: 0}
+--- !u!114 &912409187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912409177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3edab7be40ae3a46913fc7065eeaca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageCtrl: {fileID: 557596979}
+  maze_Agent: {fileID: 912409186}
+  stackedNum: 5
+  ViewWidth: 21
+  ViewHeight: 21
+  channelNum: 1
 --- !u!1 &1075718490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,8 +1089,9 @@ Transform:
   m_Children:
   - {fileID: 641337076}
   - {fileID: 1328432788}
+  - {fileID: 1891166357}
   m_Father: {fileID: 1553739542}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1075718492
 MonoBehaviour:
@@ -1110,7 +1108,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 10000
+  MaxStep: 100
   stageCtrl: {fileID: 557596979}
   goal: {x: 0, y: 0}
   foodnum: 0
@@ -1132,8 +1130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 0
-    NumStackedVectorObservations: 1
+    VectorObservationSize: 3
+    NumStackedVectorObservations: 5
     m_ActionSpec:
       m_NumContinuousActions: 2
       BranchSizes: 6400000064000000
@@ -1157,7 +1155,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075718490}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 282f342c2ab144bf38be65d4d0c4e07d, type: 3}
   m_Name: 
@@ -1294,9 +1292,9 @@ GameObject:
   - component: {fileID: 1326073391}
   - component: {fileID: 1326073390}
   - component: {fileID: 1326073389}
-  - component: {fileID: 1326073388}
   - component: {fileID: 1326073393}
   - component: {fileID: 1326073392}
+  - component: {fileID: 1326073394}
   m_Layer: 0
   m_Name: maze agent
   m_TagString: Untagged
@@ -1320,24 +1318,6 @@ Transform:
   m_Father: {fileID: 1553739542}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1326073388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326073386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3edab7be40ae3a46913fc7065eeaca6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageCtrl: {fileID: 557596979}
-  maze_Agent: {fileID: 1326073390}
-  stackedNum: 1
-  ViewWidth: 21
-  ViewHeight: 21
-  channelNum: 1
 --- !u!114 &1326073389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1378,10 +1358,7 @@ MonoBehaviour:
   controller: {fileID: 1075718492}
   startPointList:
   - {x: 0, y: 0}
-  - {x: 13, y: 0}
-  - {x: 20, y: 0}
   - {x: 34, y: 0}
-  - {x: 34, y: 19}
   startPoint: {x: 0, y: 0}
 --- !u!114 &1326073391
 MonoBehaviour:
@@ -1396,8 +1373,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 0
-    NumStackedVectorObservations: 1
+    VectorObservationSize: 2
+    NumStackedVectorObservations: 10
     m_ActionSpec:
       m_NumContinuousActions: 0
       BranchSizes: 05000000
@@ -1405,9 +1382,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 914b16495a3b41f4abfb032a76546e44, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 1
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: MRL_maze
   TeamId: 0
   m_UseChildSensors: 1
@@ -1425,7 +1402,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -1443,6 +1420,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1326073394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326073386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd372d1f2b5a9a4e8233920fb1f1d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageCtrl: {fileID: 557596979}
+  maze_Agent: {fileID: 1326073390}
+  stackedNum: 10
 --- !u!1 &1328432787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,7 +1659,6 @@ Transform:
   m_Children:
   - {fileID: 557596980}
   - {fileID: 1326073387}
-  - {fileID: 1891166357}
   - {fileID: 1075718491}
   - {fileID: 912409178}
   m_Father: {fileID: 0}
@@ -1781,7 +1772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1891166357
 Transform:
   m_ObjectHideFlags: 0
@@ -1794,7 +1785,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.06, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1553739542}
+  m_Father: {fileID: 1075718491}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1891166358
@@ -1833,14 +1824,14 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: d516c9ba9e998c242b33b936e0ba962b, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: ccadb03aeb220c945a31fb33db1e8319, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 2
   m_BehaviorName: MRL_maze
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
-  m_DeterministicInference: 0
+  m_DeterministicInference: 1
   m_ObservableAttributeHandling: 0
 --- !u!23 &1891166364
 MeshRenderer:
@@ -1849,7 +1840,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891166356}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1970,7 +1961,7 @@ MonoBehaviour:
   foodnum: 0
   bobmnum: 0
   curPos: {x: 0, y: 24}
-  isModular: 0
+  isModular: 1
   contorlSignal: 0
   controller: {fileID: 1075718492}
   startPoint: {x: 19, y: 31}

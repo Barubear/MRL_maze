@@ -39,6 +39,9 @@ public class Maze_Agent : Agent
         Vector2Int vector2 = Vector2Int.zero;
         switch (contorlSignal)
         {
+            case 0:
+                vector2 = Vector2Int.zero;
+                break;
             case 1:
                 vector2 = new Vector2Int(1, 0);
 

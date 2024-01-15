@@ -86,7 +86,7 @@ public override void OnActionReceived(ActionBuffers actions)
         
         int contorlSignal = actions.DiscreteActions[0];
         Vector2Int newPos = curPos + getActionVector(contorlSignal);
-        if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-10);
+        if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-1);
         else {
 
             switch (stageCtrl.map[newPos.x, newPos.y].x) { 
@@ -97,13 +97,13 @@ public override void OnActionReceived(ActionBuffers actions)
                     if(stageCtrl.map[newPos.x, newPos.y].y < 255)
                         stageCtrl.map[newPos.x, newPos.y].y++;*/
                     curPos = newPos;
-
+                    this.transform.position = getPos(curPos);
                     break;
                 case -1://wall
-                    AddReward(-10);
+                    AddReward(-1);
                     break;
                 case 2://food
-                    AddReward(200);
+                    AddReward(300);
                     /*stageCtrl.map[newPos.x, newPos.y].x = 0;
                     if (stageCtrl.map[newPos.x, newPos.y].y < 255)
                         stageCtrl.map[newPos.x, newPos.y].y++;*/
@@ -133,13 +133,13 @@ public override void OnActionReceived(ActionBuffers actions)
 
             }
             
-            AddReward(-0.01f);
+            AddReward(-0.05f);
         }
         
         float currDis = Vector2Int.Distance(curPos, goal);
         if (currDis < minDis)
         {
-            AddReward(10f);
+            AddReward(5f);
             minDis = currDis;
         }
         

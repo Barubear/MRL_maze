@@ -14,6 +14,7 @@ public class MazeModelAgent : ModularAgent
     public Vector2Int startPoint;
     
 
+
     public override void Initialize()
     {
 
@@ -28,13 +29,19 @@ public class MazeModelAgent : ModularAgent
 
     }
 
+    public override void CollectObservations(VectorSensor sensor)
+    {
+       sensor.AddObservation(curPos);
+    }
+
+
     public override void OnEpisodeBegin()
     {
         if (!isModular)
         {
             startPointIndex++;
             startPoint = startPointList[startPointIndex % startPointList.Count];
-            Debug.Log(startPoint);
+            //Debug.Log(startPoint);
             this.transform.position = getPos(startPoint);
             curPos = startPoint;
             minDis = Vector2Int.Distance(curPos, goal);
@@ -55,52 +62,53 @@ public class MazeModelAgent : ModularAgent
     {
         
         contorlSignal = actions.DiscreteActions[0];
-        if (!isModular)
-        {
+        
+        
             Vector2Int newPos = curPos + getActionVector(contorlSignal);
 
-            if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-10);
+            if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-1);
             else
             {
 
                 switch (stageCtrl.map[newPos.x, newPos.y].x)
                 {
                     case 0:
-                        curPos = newPos;
-                        break;
+                    if (!isModular) curPos = newPos;
+                    else curPos = controller.curPos;
+                    break;
+
                     case -1://wall
-                        AddReward(-10);
+                        AddReward(-1);
                         break;
 
                     case 5://goal
+
                         AddReward(500);
-                        curPos = newPos;
-                        Debug.Log("goal");
-                        EndEpisode();
+                        if (!isModular) {
+                            curPos = newPos;
+                            Debug.Log("goal");
+                            EndEpisode();
+                           }
+                        else curPos = controller.curPos;
+                        
+                       
                         break;
 
 
                 }
-                this.transform.position = getPos(curPos);
-                AddReward(-0.1f);
-            }
+                if (!isModular) this.transform.position = getPos(curPos);
+                AddReward(-0.05f);
+            
 
             float currDis = Vector2Int.Distance(curPos, goal);
             if (currDis < minDis)
             {
-                AddReward(20f);
+                AddReward(50f);
                 minDis = currDis;
             }
-        }
-        else {
-            //controller.ActionDic[this] = actions;
-            float currDis = Vector2Int.Distance(curPos, goal);
-            if (currDis < minDis)
-            {
-                
-                minDis = currDis;
+            
+        
             }
-        }
 
         
 

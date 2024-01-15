@@ -216,10 +216,13 @@ public class stageCtrl : MonoBehaviour
     public void creatGoal() {
 
         map[width - 1, height - 1] = new Vector2Int(5, 0);
-        Vector3 newPos = new Vector3(this.transform.position.x + 1.5f * (width - 1), 0.5f, this.transform.position.z - (1.5f * (height - 1)));
-        GameObject newCell = Instantiate(goal, newPos, Quaternion.identity);
-        itemList.Add(new Vector2Int(width - 1, height - 1) ,newCell);
-        newCell.transform.SetParent(this.transform);
+        if (isFirst) {
+            Vector3 newPos = new Vector3(this.transform.position.x + 1.5f * (width - 1), 0.5f, this.transform.position.z - (1.5f * (height - 1)));
+            GameObject newCell = Instantiate(goal, newPos, Quaternion.identity);
+            //itemList.Add(new Vector2Int(width - 1, height - 1) ,newCell);
+            newCell.transform.SetParent(this.transform);
+        }
+        
         
     }
     

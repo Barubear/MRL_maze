@@ -63,47 +63,61 @@ public class FoodModelAgent : ModularAgent
 
         contorlSignal = actions.DiscreteActions[0];
 
-        if (!isModular) {
+       
 
             Vector2Int newPos = curPos + getActionVector(contorlSignal);
-            if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-10);
+            if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-1);
             else
             {
 
                 switch (stageCtrl.map[newPos.x, newPos.y].x)
                 {
                     case 0:
+
+                    /* if (stageCtrl.map[newPos.x, newPos.y].y > 3)
+                         AddReward(-0.5f * stageCtrl.map[newPos.x, newPos.y].y);
+
+                     if (stageCtrl.map[newPos.x, newPos.y].y < 255)
+                         stageCtrl.map[newPos.x, newPos.y].y++;*/
+
+                    if (!isModular)
+                    {
                         curPos = newPos;
-                       /* if (stageCtrl.map[newPos.x, newPos.y].y > 3)
-                            AddReward(-0.5f * stageCtrl.map[newPos.x, newPos.y].y);
-
-                        if (stageCtrl.map[newPos.x, newPos.y].y < 255)
-                            stageCtrl.map[newPos.x, newPos.y].y++;*/
-
                         this.transform.position = getPos(curPos);
+                    }
+                    else curPos = controller.curPos;
                         break;
                     case -1://wall
-                        AddReward(-10);
+                        AddReward(-1);
                         break;
                     case 2://food
+                        if (!isModular) {
                         curPos = newPos;
                         this.transform.position = getPos(curPos);
-                        curPos = newPos;
                         stageCtrl.map[newPos.x, newPos.y].x = 0;
+                        stageCtrl.DestoryItem(newPos);
+                    }
+                        
+                        
+                        
                         AddReward(100 + 50 * foodnum);
                         Debug.Log("eat");
                         foodnum++;
-                        stageCtrl.DestoryItem(newPos);
+                        
 
                         //stageCtrl.map[newPos.x, newPos.y].y++;
 
 
                         break;
                     case 5:
-                        if (foodnum < 12) AddReward(-1000);
-                        else AddReward(90 * foodnum);
+                    if (foodnum < 12) AddReward(-1000);
+                    else AddReward(90 * foodnum);
+                    if (!isModular)
+                    {
+
                         EndEpisode();
                         Debug.Log("goal");
+                    }
                         break;
 
                 }
@@ -113,10 +127,10 @@ public class FoodModelAgent : ModularAgent
             {
                 AddReward(100 * foodnum);
                 Debug.Log("completed");
-                EndEpisode();
+                if (!isModular) EndEpisode();
             }
-            AddReward(-0.01f);
-        }
+           
+        
         
 
 
