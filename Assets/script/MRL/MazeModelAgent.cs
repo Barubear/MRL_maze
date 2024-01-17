@@ -12,7 +12,8 @@ public class MazeModelAgent : ModularAgent
     public List<Vector2Int> startPointList;
     int startPointIndex;
     public Vector2Int startPoint;
-    
+    int minX;
+    int minY;
 
 
     public override void Initialize()
@@ -31,7 +32,7 @@ public class MazeModelAgent : ModularAgent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-       sensor.AddObservation(curPos);
+      // sensor.AddObservation(curPos);
     }
 
 
@@ -46,6 +47,7 @@ public class MazeModelAgent : ModularAgent
             curPos = startPoint;
             minDis = Vector2Int.Distance(curPos, goal);
             stageCtrl.mapReset();
+           
         }
         else
         {
@@ -53,6 +55,9 @@ public class MazeModelAgent : ModularAgent
             goal = controller.goal;
             minDis = Vector2Int.Distance(curPos, goal);
         }
+
+        minX = curPos.x;
+        minY = curPos.y;
     }
 
 
@@ -77,7 +82,12 @@ public class MazeModelAgent : ModularAgent
                     else curPos = controller.curPos;
                     break;
 
-                    case -1://wall
+                    case 2:
+                     if (!isModular) curPos = newPos;
+                        else curPos = controller.curPos;
+                        break;
+
+                case -1://wall
                         AddReward(-1);
                         break;
 
@@ -97,18 +107,28 @@ public class MazeModelAgent : ModularAgent
 
                 }
                 if (!isModular) this.transform.position = getPos(curPos);
-                AddReward(-0.05f);
+                AddReward(-0.1f);
             
 
-            float currDis = Vector2Int.Distance(curPos, goal);
+          /*  float currDis = Vector2Int.Distance(curPos, goal);
             if (currDis < minDis)
             {
-                AddReward(50f);
+                AddReward(5f);
                 minDis = currDis;
-            }
+            }*/
             
-        
+            if(curPos.x > minX)
+            {
+                AddReward(5f);
+                minX = curPos.x;
             }
+            if (curPos.y > minY)
+            {
+                AddReward(5f);
+                minY = curPos.y;
+            }
+
+        }
 
         
 

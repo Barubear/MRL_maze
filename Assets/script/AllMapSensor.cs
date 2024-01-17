@@ -70,9 +70,16 @@ public class AllMapSensor : ISensor
                 else {
                     int obs = stageCtrl.map[w, h].x;
 
-                    writer[h+1, w+1, 0] = obs;
-                    if(obs == -1) dataRaw[index] = Convert.ToByte(255);
-                    else dataRaw[index] = Convert.ToByte(obs);
+
+                    if (obs == -1) {
+                        writer[h + 1, w + 1, 0] = obs;
+                        dataRaw[index] = Convert.ToByte(255);
+                    }
+                    else
+                    {
+                        writer[h + 1, w + 1, 0] = 0;
+                        dataRaw[index] =0;
+                    }
                 }
                 
                 

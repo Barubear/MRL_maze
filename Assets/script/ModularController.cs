@@ -9,8 +9,10 @@ public class ModularController : Maze_Agent
 {
     public List<ModularAgent> modulars;
     public Dictionary<ModularAgent, ActionBuffers> ActionDic;
-    int modeularIndex;
-
+    public int modeularIndex;
+    int minX;
+    int minY;
+    public int plusNum;
     public override void Initialize()
     {
         ActionDic = new Dictionary<ModularAgent, ActionBuffers>();
@@ -29,6 +31,10 @@ public class ModularController : Maze_Agent
             model.gameObject.transform.position= getPos(startPoint);
         }
         stageCtrl.mapReset(IcreatItem);
+        minX = curPos.x;
+        minY = curPos.y;
+        foodnum = 0;
+        minDis = Vector2Int.Distance(curPos, goal);
     }
 
 
@@ -40,24 +46,42 @@ public class ModularController : Maze_Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        List<int> contorlSignaSeed = new List<int>();
+        for (int i = 0; i < modulars.Count; i++)
+        {
+            for (int j = 0; j < actions.DiscreteActions[i]; j++)
+            {
+                contorlSignaSeed.Add(i);
+            }
+        }
+
+
+        for (int i = 0; i < plusNum; i++)
+        {
+
+            contorlSignaSeed.Add(1);
+        }
+
+
+
+        if (contorlSignaSeed.Count == 0) {
+            for (int i = 0; i < modulars.Count; i++)
+            {
+
+                contorlSignaSeed.Add(i);
+
+            }
+
+        }
+
+
+
+
+
+        modeularIndex = contorlSignaSeed[Random.Range(0, contorlSignaSeed.Count - 1)];
         
-        int contorlSignal = 0;
-        if (actions.DiscreteActions[0] > actions.DiscreteActions[1])
-        {
-
-            contorlSignal = modulars[0].contorlSignal;
-
-        }
-        else if (actions.DiscreteActions[0] < actions.DiscreteActions[1])
-        {
-            modeularIndex = 1;
-            contorlSignal = modulars[1].contorlSignal;
-        }
-        else {
-
-            modeularIndex = -1;
-            AddReward(-0.1f);
-        }
+       
+        int  contorlSignal = modulars[modeularIndex].contorlSignal;
         
 
 
@@ -78,23 +102,41 @@ public class ModularController : Maze_Agent
                     AddReward(-1);
                     break;
                 case 2://food
-                    AddReward(500);
+                    AddReward(300);
+                    foodnum++;
                     curPos = newPos;
                     this.transform.position = getPos(curPos);
                     curPos = newPos;
                     stageCtrl.map[newPos.x, newPos.y].x = 0;
-                    Debug.Log("eat");
+                    //Debug.Log("eat");
                     stageCtrl.DestoryItem(newPos);
                     
                     break;
                 case 5:
-                    AddReward(1000);
+                    AddReward(300);
+                    //Debug.Log("goal");
                     EndEpisode();
 
                     break;
 
             }
-            AddReward(-0.1f);
+            float currDis = Vector2Int.Distance(curPos, goal);
+            if (currDis < minDis)
+            {
+                AddReward(5f);
+                minDis = currDis;
+            }
+            /*AddReward(-0.01f);
+            if (curPos.x > minX)
+            {
+                AddReward(1f);
+                minX = curPos.x;
+            }
+            if (curPos.y > minY)
+            {
+                AddReward(1f);
+                minY = curPos.y;
+            }*/
         }
     }
 

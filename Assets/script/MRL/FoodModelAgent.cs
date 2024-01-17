@@ -126,7 +126,7 @@ public class FoodModelAgent : ModularAgent
             if (foodnum == 15)
             {
                 AddReward(100 * foodnum);
-                Debug.Log("completed");
+                //Debug.Log("completed");
                 if (!isModular) EndEpisode();
             }
            
