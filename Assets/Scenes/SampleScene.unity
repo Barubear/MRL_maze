@@ -1119,6 +1119,7 @@ MonoBehaviour:
   - {fileID: 1326073390}
   - {fileID: 1891166376}
   modeularIndex: 0
+  plusNum: 20
 --- !u!114 &1075718493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1141,9 +1142,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_Model: {fileID: 5022602860645237092, guid: 77eeb645e8a05f8468002b1acc32b8b2, type: 3}
+  m_InferenceDevice: 1
+  m_BehaviorType: 2
   m_BehaviorName: MRL_maze
   TeamId: 0
   m_UseChildSensors: 0
