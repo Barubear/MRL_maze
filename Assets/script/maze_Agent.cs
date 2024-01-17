@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.VisualScripting;
@@ -19,15 +20,21 @@ public class Maze_Agent : Agent
     int testNum = 0;
     public string AgentType;
     protected TestTool testTool;
-
-    
+    string[] mapDataStr;
+    string mapData;
+    public int testTimes;
+    public override void Initialize()
+    {
+        mapDataStr = File.ReadAllLines(".\\Assets\\LogData\\TestFoodData.txt");
+    }
     public override void OnEpisodeBegin()
     {
-        if (testNum < 10)
+        if (testNum < testTimes)
         {
             if (testNum == 0) testTool.doLog("start");
             testTool.doLog("\n" + "#");
             stepNum = 0;
+            mapData = mapDataStr[testNum];
             testNum++;
         }
         else {
@@ -86,5 +93,30 @@ public class Maze_Agent : Agent
 
         }
         return vector2;
+    }
+
+    public void creatItemForTest()
+    {
+        List<Vector2Int> data = new List<Vector2Int>();
+        string[] datas = mapData.Split(" ");
+        foreach (string s in datas)
+        {
+            
+            if (s != "") {
+                string[] points = s.Split(",");
+                data.Add(new Vector2Int(int.Parse(points[0]), int.Parse(points[1])));
+            }
+            
+
+            
+           
+        }
+        stageCtrl.creatGoal(new Vector2Int(34, 34));
+        foreach (var pos in data) {
+            stageCtrl.creatItemWithPosition(stageCtrl.food, 2, pos);
+        }
+        
+
+
     }
 }

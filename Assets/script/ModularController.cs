@@ -15,6 +15,7 @@ public class ModularController : Maze_Agent
     public int plusNum;
     public override void Initialize()
     {
+        base.Initialize();
         AgentType = "ModularController";
         testTool = new TestTool(this);
         ActionDic = new Dictionary<ModularAgent, ActionBuffers>();
@@ -22,6 +23,7 @@ public class ModularController : Maze_Agent
         {
             ActionDic[modular] = new ActionBuffers();
         }
+        
     }
     public override void OnEpisodeBegin()
     {

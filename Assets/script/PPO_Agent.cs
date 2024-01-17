@@ -14,8 +14,10 @@ public class PPO_Agent : Maze_Agent
     
     public override void Initialize()
     {
+        base.Initialize();
         AgentType = "PPO_Agent";
         testTool = new TestTool(this);
+        
     }
 
     public override void OnEpisodeBegin()
@@ -25,7 +27,7 @@ public class PPO_Agent : Maze_Agent
         curPos = Vector2Int.zero;
         goal = new Vector2Int(stageCtrl.width-1 , stageCtrl.height-1);
         minDis = Vector2Int.Distance(curPos, goal);
-        stageCtrl.mapReset(IcreatItem);
+        stageCtrl.mapReset(creatItemForTest);
         foodnum = 0;
         bobmnum = 0;
         this.transform.position = getPos(curPos);
