@@ -19,7 +19,7 @@ public class MazeModelAgent : ModularAgent
     public override void Initialize()
     {
 
-        
+        AgentType = "MazeModelAgent";
         if (!isModular)
         {
             startPointIndex = -1;

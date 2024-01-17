@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Maze_Agent : Agent
@@ -14,8 +15,35 @@ public class Maze_Agent : Agent
     public int foodnum;
     public int bobmnum;
     public Vector2Int curPos;
+    public int stepNum = 0;
+    int testNum = 0;
+    public string AgentType;
+    protected TestTool testTool;
+
     
+    public override void OnEpisodeBegin()
+    {
+        if (testNum < 10)
+        {
+            if (testNum == 0) testTool.doLog("start");
+            testTool.doLog("\n" + "#");
+            stepNum = 0;
+            testNum++;
+        }
+        else {
+
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+        
+    }
     
+    public void EndEpisodeForTest() {
+
+        testTool.doLog("stepNum:"+ stepNum + ",foodNum:" + stepNum);
+        EndEpisode();
+
+
+    }
     protected Vector3 getPos(Vector2Int alex)
     {
         return new Vector3(stageCtrl.transform.position.x + 1.5f * alex.x, 0.5f, stageCtrl.transform.position.z - (1.5f * alex.y));

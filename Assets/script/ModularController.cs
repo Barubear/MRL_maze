@@ -15,6 +15,8 @@ public class ModularController : Maze_Agent
     public int plusNum;
     public override void Initialize()
     {
+        AgentType = "ModularController";
+        testTool = new TestTool(this);
         ActionDic = new Dictionary<ModularAgent, ActionBuffers>();
         foreach (var modular in modulars)
         {
@@ -23,6 +25,7 @@ public class ModularController : Maze_Agent
     }
     public override void OnEpisodeBegin()
     {
+        base.OnEpisodeBegin();
         Vector2Int startPoint= new Vector2Int(0,0);
         this.transform.position = getPos(startPoint);
         curPos = startPoint;
@@ -46,6 +49,7 @@ public class ModularController : Maze_Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        stepNum++;
         List<int> contorlSignaSeed = new List<int>();
         for (int i = 0; i < modulars.Count; i++)
         {
@@ -115,8 +119,8 @@ public class ModularController : Maze_Agent
                 case 5:
                     AddReward(300);
                     //Debug.Log("goal");
-                    EndEpisode();
-
+                    //EndEpisode();
+                    EndEpisodeForTest();
                     break;
 
             }

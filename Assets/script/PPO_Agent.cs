@@ -4,22 +4,24 @@ using Unity.Barracuda;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
 public class PPO_Agent : Maze_Agent
 {
-   
 
+    
     public override void Initialize()
     {
-
+        AgentType = "PPO_Agent";
+        testTool = new TestTool(this);
     }
 
     public override void OnEpisodeBegin()
     {
         //Debug.Log("OnEpisodeBegin");
-        
+        base.OnEpisodeBegin();
         curPos = Vector2Int.zero;
         goal = new Vector2Int(stageCtrl.width-1 , stageCtrl.height-1);
         minDis = Vector2Int.Distance(curPos, goal);
@@ -83,7 +85,7 @@ public class PPO_Agent : Maze_Agent
 public override void OnActionReceived(ActionBuffers actions)
     {
 
-        
+        stepNum++;
         int contorlSignal = actions.DiscreteActions[0];
         Vector2Int newPos = curPos + getActionVector(contorlSignal);
         if (newPos.y < 0 || newPos.y > stageCtrl.height - 1 || newPos.x < 0 || newPos.x > stageCtrl.width - 1) AddReward(-1);
@@ -127,7 +129,8 @@ public override void OnActionReceived(ActionBuffers actions)
                     AddReward(300);
                     curPos = newPos;
                     this.transform.position = getPos(curPos);
-                    EndEpisode();
+                    //EndEpisode();
+                    EndEpisodeForTest();
                     break;
 
 

@@ -19,7 +19,7 @@ public class FoodModelAgent : ModularAgent
     
     public override void Initialize()
     {
-        
+        AgentType = "FoodModelAgent";
     }
     public override void OnEpisodeBegin()
     {
