@@ -292,7 +292,28 @@ public class stageCtrl : MonoBehaviour
 
 
     }
+    public List<Vector2Int> creatItemMapData(int num, float seed, int minX, int maxX, int minY, int maxY)
+    {
+        List<Vector2Int> res = new List<Vector2Int>();
+        int curNum = 0;
 
+        while (curNum < num)
+        {
+            int x = GenerateRandomNumber(0, width - 1, minX, maxX, seed);
+            int y = GenerateRandomNumber(0, height - 1, minY, maxY, seed);
+            if (map[x, y].x == 0)
+            {
+                
+                
+                map[x, y] = new Vector2Int(2, 0);
+                curNum++;
+                res.Add(new Vector2Int(x,y));
+
+            }
+
+        }
+        return res;
+    }
 
     //completely random
     public void creatItem(int num, GameObject perfb, int code)
@@ -425,7 +446,20 @@ public class stageCtrl : MonoBehaviour
         
         
     }
+    public void mapResetForTest() {
 
+        foreach (var item in itemList)
+        {
+            Destroy(item.Value);
+        }
+        itemList.Clear();
+        map = new Vector2Int[width, height];
+        if (wallList.Count == 0) isFirst = true;
+        else isFirst = false;
+        creatWall(mapData);
+
+
+    }
 
     public void DestoryItem(Vector2Int pos) {
 
