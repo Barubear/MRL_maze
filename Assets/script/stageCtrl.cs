@@ -296,21 +296,27 @@ public class stageCtrl : MonoBehaviour
     {
         List<Vector2Int> res = new List<Vector2Int>();
         int curNum = 0;
-
+        int n = 0;
         while (curNum < num)
         {
             int x = GenerateRandomNumber(0, width - 1, minX, maxX, seed);
             int y = GenerateRandomNumber(0, height - 1, minY, maxY, seed);
+            
             if (map[x, y].x == 0)
             {
                 
                 
-                map[x, y] = new Vector2Int(2, 0);
+                map[x, y].x = 2;
                 curNum++;
                 res.Add(new Vector2Int(x,y));
 
             }
+            n++;
+            if (n > 1000) {
+                Debug.Log("!!!!");
+                break;
 
+            }
         }
         return res;
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.VisualScripting;
@@ -19,15 +20,26 @@ public class Maze_Agent : Agent
     int testNum = 0;
     public string AgentType;
     protected TestTool testTool;
+    public int testTimes;
+    string[] mapDataStr;
+    string mapData;
 
-    
+    public override void Initialize() {
+
+        mapDataStr = File.ReadAllLines(".\\Assets\\LogData\\TestFoodData.txt");
+
+
+
+
+    }
     public override void OnEpisodeBegin()
     {
-        if (testNum < 10)
+        if (testNum < testTimes)
         {
             if (testNum == 0) testTool.doLog("start");
             testTool.doLog("\n" + "#");
             stepNum = 0;
+            mapData = mapDataStr[testNum];
             testNum++;
         }
         else {
@@ -39,7 +51,7 @@ public class Maze_Agent : Agent
     
     public void EndEpisodeForTest() {
 
-        testTool.doLog("stepNum:"+ stepNum + ",foodNum:" + stepNum);
+        testTool.doLog("stepNum:"+ stepNum + ",foodNum:" + foodnum);
         EndEpisode();
 
 
@@ -86,5 +98,19 @@ public class Maze_Agent : Agent
 
         }
         return vector2;
+    }
+
+    public void creatItemForTest() {
+        stageCtrl.creatGoal(new Vector2Int(34, 34));
+        List<Vector2Int> map = new List<Vector2Int>();
+        string[] data = mapData.Split(" ");
+        foreach (var s in data) {
+            if (s != "") {
+                string[] strs = s.Split(",");
+                map.Add(new Vector2Int( int.Parse(strs[0]), int.Parse(strs[1]) ) );
+            }
+        }
+        stageCtrl.creatItemWithPosition(stageCtrl.food,2, map);
+
     }
 }

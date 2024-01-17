@@ -24,7 +24,7 @@ public class FoodModelAgent : ModularAgent
     public override void OnEpisodeBegin()
     {
 
-        foodnum = 0;
+        this.foodnum = 0;
         if (!isModular)
         {
             this.transform.position = getPos(startPoint);
@@ -101,8 +101,8 @@ public class FoodModelAgent : ModularAgent
                         
                         
                         AddReward(100 + 50 * foodnum);
-                        Debug.Log("eat");
-                        foodnum++;
+                    //Debug.Log("eat");
+                        this.foodnum++;
                         
 
                         //stageCtrl.map[newPos.x, newPos.y].y++;
@@ -110,7 +110,7 @@ public class FoodModelAgent : ModularAgent
 
                         break;
                     case 5:
-                    if (foodnum < 12) AddReward(-1000);
+                    if (this.foodnum < 12) AddReward(-1000);
                     else AddReward(90 * foodnum);
                     if (!isModular)
                     {

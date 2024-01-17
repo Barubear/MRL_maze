@@ -14,6 +14,7 @@ public class PPO_Agent : Maze_Agent
     
     public override void Initialize()
     {
+        base.Initialize();
         AgentType = "PPO_Agent";
         testTool = new TestTool(this);
     }

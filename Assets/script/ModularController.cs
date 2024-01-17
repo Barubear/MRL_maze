@@ -15,6 +15,7 @@ public class ModularController : Maze_Agent
     public int plusNum;
     public override void Initialize()
     {
+        base.Initialize();
         AgentType = "ModularController";
         testTool = new TestTool(this);
         ActionDic = new Dictionary<ModularAgent, ActionBuffers>();
@@ -33,7 +34,7 @@ public class ModularController : Maze_Agent
         
             model.gameObject.transform.position= getPos(startPoint);
         }
-        stageCtrl.mapReset(IcreatItem);
+        stageCtrl.mapReset(creatItemForTest);
         minX = curPos.x;
         minY = curPos.y;
         foodnum = 0;
@@ -112,7 +113,7 @@ public class ModularController : Maze_Agent
                     this.transform.position = getPos(curPos);
                     curPos = newPos;
                     stageCtrl.map[newPos.x, newPos.y].x = 0;
-                    //Debug.Log("eat");
+                    Debug.Log("eat");
                     stageCtrl.DestoryItem(newPos);
                     
                     break;
